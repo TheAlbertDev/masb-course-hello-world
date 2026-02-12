@@ -24,13 +24,13 @@ In this exercise, we will learn to create a program using Arduino. We will use o
 
 ## Procedure
 
-## IDE Preparation and Digital Outputs
+### IDE Preparation and Digital Outputs
 
-### IDE Preparation
+#### IDE Preparation
 
 The first step is to install the application used to develop Arduino-based programs: PlatformIO IDE. IDE stands for [_Integrated Development Environment_](https://en.wikipedia.org/wiki/Integrated_development_environment). An IDE is an application that provides the necessary tools to develop, compile, deploy, and debug software.
 
-#### Step-by-Step: Setting Up Your Development Environment
+##### Step-by-Step: Setting Up Your Development Environment
 
 1. **Install Visual Studio Code (VS Code):**
 
@@ -47,7 +47,7 @@ The first step is to install the application used to develop Arduino-based progr
 ![](/.github/images/vscode-import-profile.png)
 _Figure: Importing a VS Code profile for PlatformIO._
 
-#### Arduino IDE vs. PlatformIO
+##### Arduino IDE vs. PlatformIO
 
 Normally, when starting with Arduino, the Arduino IDE is used for programming. However, in this course, we will use PlatformIO, which is based on VS Code. PlatformIO is just as easy to install and use, but it allows for more advanced actions, such as creating projects with `.cpp` and `.hpp` files (standard C++ files) instead of only using the `.ino` format (the Arduino file format).
 
@@ -65,7 +65,7 @@ Detailed instructions on how to install PlatformIO IDE can be found at this [lin
 
 ![](/.github/images/platformio-extension.png)
 
-### The STM32 Nucleo-F401RE EVB
+#### The STM32 Nucleo-F401RE EVB
 
 As mentioned earlier, the EVB we will use is the STM32 Nucleo-F401RE from STMicroelectronics. This EVB features the [STM32F401RET6U](https://www.st.com/en/product/STM32F401RE) microcontroller from the same manufacturer.
 
@@ -79,9 +79,9 @@ Below is an image of the EVB we will use.
 
 The schematic of the EVB can be found [here](https://www.st.com/resource/en/schematic_pack/mb1136-default-c04_schematic.pdf). Three other important documents, which we will not yet use in this Arduino practice, are: the [microcontroller datasheet](https://www.st.com/resource/en/datasheet/stm32f401re.pdf), the [reference manual for the microcontroller family](https://www.st.com/resource/en/reference_manual/dm00096844.pdf), and the [user manual for the HAL (Hardware Abstraction Layer) libraries](https://www.st.com/resource/en/user_manual/dm00105879.pdf).
 
-### Now, Let's Say: Hello, World!
+#### Now, Let's Say: Hello, World!
 
-#### Cloning the Repository
+##### Cloning the Repository
 
 In this and all other course practices, a [version control system (VCS)](https://en.wikipedia.org/wiki/Version_control) is used for development, collaboration, and submission of assignments and projects. The details of how VCS works will be gradually introduced in each practice. For now, I ask for a small leap of faith—just follow the Git instructions carefully. We will explain the commands and terms as they appear.
 
@@ -145,7 +145,7 @@ With this command, you create a branch named `{{ digital_outputs_branch_name }}`
 > [!NOTE]
 > The `branch` suffix in the branch name is superfluous and is not usually included. It has been added in this first practice to avoid confusion by preventing branches, folders, and projects from having the same name.
 
-#### Create a Project
+##### Create a Project
 
 Great. We now have our local repository on our computer. Now let's create the project where we will develop our program with PlatformIO. To create a project, simply open VS Code, click on the PlatformIO icon in the sidebar (the icon that looks like an alien/insect head), and then click on "Create New Project." A tab called "PIO Home" will open. There, click on "+ New Project."
 
@@ -212,7 +212,7 @@ void loop()
 
 This ensures that your file is ready for you to begin writing your own code from scratch. We are going to create a program that makes the EVB's LED blink every 1 second.
 
-#### Digital Outputs: Blink the LED
+##### Digital Outputs: Blink the LED
 
 The LED is connected to pin D13 of the Arduino connector. The `D` denotes that this pin is a digital GPIO that we will use as an output. GPIO stands for _General Purpose Input/Output_ and is a pin on the microcontroller that can perform various functions (e.g., capturing an analog signal, generating a PWM, programming the microcontroller, etc.), both as input (reading) and output (generating a signal). In this case, we will send a digital signal to the LED to turn it on and off. When the digital output signal is `0`, the LED will be off. When it's `1`, the LED will be on.
 
@@ -303,7 +303,7 @@ void loop()
 
 Now, build and upload the program, and you will see how the LED blinks every 1 second.
 
-#### Commit the Version
+##### Commit the Version
 
 We have a working program. Let's save this version to ensure that you can always revert to this version of the code if you change something you shouldn't. Run the following command:
 
@@ -319,11 +319,11 @@ git commit -m "make LED blink every 1 second"
 
 The command is simple and you just need to add a descriptive message of the changes made since the last commit. You've just saved your first version of the code!
 
-### Pull Request
+#### Pull Request
 
 A **Pull Request (PR)** is a feature in GitHub that allows you to propose changes from one branch (e.g., `{{ digital_outputs_branch_name }}`) into another branch (e.g., `main`). It enables code review, automated testing, and collaboration before merging your work into the main project.
 
-#### How to Create a Pull Request
+##### How to Create a Pull Request
 
 1. Push your changes to the remote repository using the following command:
 
@@ -342,7 +342,7 @@ This command uploads the changes from the local repository to the remote reposit
 4. Ensure the base branch is `main` and the compare branch is `{{ digital_outputs_branch_name }}`.
 5. Add a descriptive title and comment, then click **Create pull request**.
 
-#### Automated Tests
+##### Automated Tests
 
 When you create or update a Pull Request (by pushing new commits to the `{{ digital_outputs_branch_name }}` branch), automated tests will be triggered. These tests have been specifically implemented and configured for this course and are executed remotely on a Raspberry Pi (RPi) that is powered on 24/7 and has the same EVB (STM32 Nucleo-F401RE) connected to it. The RPi loads your program into the connected EVB and checks that the defined requirements for the lesson are accomplished (in this case, blinking the LED every 1 second). The status and results of the tests are shown directly in the Pull Request.
 
@@ -351,7 +351,7 @@ When you create or update a Pull Request (by pushing new commits to the `{{ digi
 >
 > If your test remains in the "queued" state for a long time (more than 1 hour), please post your issue in the [GitHub discussion forum](https://github.com/TheAlbertDev/MASB/discussions). This could mean the RPi has lost power supply or network connection.
 
-##### How to Check Test Results
+###### How to Check Test Results
 
 After the tests run, you will see their status in the **Checks** tab of the Pull Request page:
 
@@ -365,14 +365,14 @@ If a test fails, please refer to the logs provided in the Pull Request to find t
 
 To make any necessary corrections, simply modify the code to fix the bugs, add the changes to Git, and push them. The Pull Request will detect that there are new commits and will re-run the tests.
 
-#### Merging the Pull Request
+##### Merging the Pull Request
 
 **Once all tests have passed**, you can merge your developments into the `main` branch by clicking the **Merge pull request** button.
 
 > [!NOTE]
 > Normally, merged branches should be deleted to keep the repository clean. However, for academic purposes, we will keep them alive.
 
-## Digital Inputs
+### Digital Inputs
 
 We know how to output zeros and ones through the GPIOs. Now let's see how to read them. To do this, we will use the B1 button on the EVB. From this button, as we can see in the schematic of the EVB, it outputs a `1` when not pressed and a `0` when pressed. This behavior is commonly described as _active-low_ because it indicates an action (in this case, pressing a button) by generating a `0`. If it were the opposite, it would be (oh, surprise) _active-high_.
 
@@ -381,7 +381,7 @@ The output from button B1 is connected to pin 23. This pin is not found by defau
 > [!NOTE]
 > There's a third option available for `pinMode`, which is `INPUT_PULLUP`. With this third option, in addition to configuring the pin as input, we indicate that the microcontroller's [pull-up resistor](https://en.wikipedia.org/wiki/Pull-up_resistor) should be enabled.
 
-### Synchronizing the main branch and creating the project
+#### Synchronizing the main branch and creating the project
 
 First, let's switch back to the main branch:
 
@@ -403,7 +403,7 @@ git switch -c {{ digital_inputs_branch_name }}
 
 Once we're in the correct branch, let's create a project in the `{{ platformio_folder_name }}` folder called `{{ digital-inputs }}`. You already know how to do this from the previous section.
 
-### Read the button to change the state of the LED
+#### Read the button to change the state of the LED
 
 To toggle between states, we will use the `digitalRead` function to read the pin's input value and use an `if` statement to establish the desired logic. We can also use the `digitalRead` function to check the current state of the LED. This would be the code:
 
@@ -496,7 +496,7 @@ void loop()
 
 We try again and... bingo! The program works exactly as we wanted. From the previous code, it's important to highlight the [scope property of variables](https://docs.arduino.cc/language-reference/en/variables/variable-scope-qualifiers/scope/). In this case, the variable `highToLowTransition`. The scope of a variable defines where it is available to be read or modified. A variable is available within the function where it is defined. If the variable is defined outside any function, it is known as a global variable, and it becomes available to all functions.
 
-### _Commit_ of the version
+#### _Commit_ of the version
 
 We have a program working correctly. Let's save this version and push it to the remote repository:
 
@@ -506,7 +506,7 @@ git commit -m "the LED turns off and on using the B1 button"
 git push
 ```
 
-### Pull Request
+#### Pull Request
 
 Once again, create a Pull Request from the `{{ digital_inputs_branch_name }}` branch to `main` and wait for the test results. Correct any undesired behavior detected by the tests, and, once all tests have passed, proceed to merge the Pull Request.
 

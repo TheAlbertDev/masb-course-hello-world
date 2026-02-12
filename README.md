@@ -56,7 +56,7 @@ Your feedback is highly valuable for improving this course. If you notice any er
 
 [![](https://img.shields.io/badge/Create%20an%20Issue-%E2%86%92-28a745?style=for-the-badge&logo=github&labelColor=28a745)](https://github.com/TheAlbertDev/masb-course-hello-world/issues/new)
 
-Thank you for helping us enhance the learning experience for everyone.
+Thank you for helping me enhance the learning experience for everyone.
 
 ## ©️ Copyright
 
