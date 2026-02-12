@@ -86,7 +86,7 @@ In this and all other course practices, a [version control system (VCS)](https:/
 
 Since this is the first lab session, if you haven't done so already, we will go through the process of cloning the remote [repository](<https://en.wikipedia.org/wiki/Repository_(version_control)>) from GitHub to your computer. This means having a local copy of all the content stored in GitHub and establishing a link to the remote repository. This link will allow you to retrieve versions and branches hosted on the server and push your changes.
 
-To do this, navigate to the main page of the repository `{{ github_repo_fullname }}` and copy the link available in the green **Clone or Download** button. Make sure you copy the link while it says **Clone with HTTPS** and not **Clone with SSH**.
+To do this, navigate to the main page of the [repository]({{ github_repo_url }}) and copy the link available in the green **Clone or Download** button. Make sure you copy the link while it says **Clone with HTTPS** and not **Clone with SSH**.
 
 Once the link is copied, go to the folder where you want to store your local repository.
 
