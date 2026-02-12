@@ -45,7 +45,6 @@ The first step is to install the application used to develop Arduino-based progr
 - You can find the PlatformIO environment profile at the following link: [MASB Arduino](https://vscode.dev/profile/github/8ba47b7a695fa1d654c7b084ae74a78b). This will open a VS Code editor in your browser. Wait for the profile to load (this may take a while), and once it appears, select and import it into your VS Code as shown in the image below. When the profile is activated, the PlatformIO branding colors are set in the activity bar to show that the profile is active.
 
 ![](/.github/images/vscode-import-profile.png)
-_Figure: Importing a VS Code profile for PlatformIO._
 
 ##### Arduino IDE vs. PlatformIO
 
