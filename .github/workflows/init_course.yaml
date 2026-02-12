@@ -1,0 +1,142 @@
+name: 🚀 Init course
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  replace_readme_text_variables:
+    name: 📝 Replace README text variables
+    if: |
+      !github.event.repository.is_template
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛡️ Get GitHub App token
+        uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.THEALBERTDEVBOT_APP_ID }}
+          private-key: ${{ secrets.THEALBERTDEVBOT_SECRET_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: 🧩 Get context
+        id: get-context
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const { data: repo } = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            core.setOutput('GITHUB_REPO_NAME', context.repo.repo);
+            core.setOutput('GITHUB_REPO_FULLNAME', `${context.repo.owner}/${context.repo.repo}`);
+            core.setOutput("GITHUB_REPO_URL", `https://github.com/${context.repo.owner}/${context.repo.repo}`);
+            core.setOutput("GITHUB_REPO_GIT_URL", `https://github.com/${context.repo.owner}/${context.repo.repo}.git`);
+
+            let username = '';
+            if (repo.template_repository) {
+              core.setOutput('GITHUB_REPO_TEMPLATE_NAME', repo.template_repository.name);
+              core.setOutput('GITHUB_REPO_TEMPLATE_URL', repo.template_repository.html_url);
+              const templateRepoName = repo.template_repository.name;
+              const currentRepoName = context.repo.repo;
+              username = currentRepoName.replace(templateRepoName, '');
+              if (username.startsWith('-')) {
+                username = username.substring(1);
+              }
+            } 
+
+            const { data: userData } = await github.rest.users.getByUsername({ username });
+            const ownerFullName = userData.name || 'Not available';
+            let emailText = 'Email not publicly available';
+            if (userData.email && userData.email.length > 0) {
+              emailText = userData.email;
+            }
+            core.setOutput('GITHUB_STUDENT_NAME', ownerFullName);
+            core.setOutput("GITHUB_STUDENT_EMAIL", emailText)
+
+      - name: 🏗️ Update Arduino README file
+        id: update-arduino-readme
+        uses: skills/action-text-variables@v3
+        with:
+          template-file: arduino/README.md
+          template-vars: |
+            github_repo_fullname: ${{ steps.get-context.outputs.GITHUB_REPO_FULLNAME }}
+            github_repo_git_url: ${{ steps.get-context.outputs.GITHUB_REPO_GIT_URL }}
+            github_student_name: ${{ steps.get-context.outputs.GITHUB_STUDENT_NAME }}
+            github_student_email: ${{ steps.get-context.outputs.GITHUB_STUDENT_EMAIL }}
+            github_repo_name: ${{ steps.get-context.outputs.GITHUB_REPO_NAME }}
+            digital_outputs_branch_name: arduino-digital-outputs-branch
+            digital_outputs_project_name: digital-outputs
+            digital_inputs_branch_name: arduino-digital-inputs-branch
+            digital_inputs_project_name: digital-inputs
+            challenge-branch-name: arduino-challenge-branch
+            challenge-project-name: challenge
+            platformio_folder_name: arduino/workspace
+            github_repo_url: ${{ steps.get-context.outputs.GITHUB_REPO_URL }}
+
+      - name: 📝 Overwrite Arduino README
+        env:
+          README_TEXT: ${{ steps.update-arduino-readme.outputs.updated-text }}
+        run: echo "$README_TEXT" > arduino/README.md
+
+      - name: 🏗️ Update STM32Cube README file
+        id: update-stm32cube-readme
+        uses: skills/action-text-variables@v3
+        with:
+          template-file: stm32cube/README.md
+          template-vars: |
+            digital_outputs_branch_name: stm32cube-digital-outputs-branch
+            digital_outputs_project_name: digital-outputs
+            digital_inputs_branch_name: stm32cube-digital-inputs-branch
+            digital_inputs_project_name: digital-inputs
+            challenge_branch_name: stm32cube-challenge-branch
+            challenge_project_name: challenge
+            stm32cube_folder_name: stm32cube/workspace
+
+      - name: 📝 Overwrite STM32Cube README
+        env:
+          README_TEXT: ${{ steps.update-stm32cube-readme.outputs.updated-text }}
+        run: echo "$README_TEXT" > stm32cube/README.md
+
+      - name: 🏗️ Update Main README file
+        id: update-main-readme
+        uses: skills/action-text-variables@v3
+        with:
+          template-file: README.md
+          template-vars: |
+            github_repo_template: ${{ steps.get-context.outputs.GITHUB_REPO_TEMPLATE_URL }}
+            github_repo_fullname: ${{ steps.get-context.outputs.GITHUB_REPO_FULLNAME }}
+
+      - name: 📝 Overwrite Main README
+        env:
+          README_TEXT: ${{ steps.update-main-readme.outputs.updated-text }}
+        run: echo "$README_TEXT" > README.md
+
+      - name: 🚫 Disable current workflow
+        run: |
+          gh workflow disable "🚀 Init course"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: 💾 Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: |
+            - README.md
+            - arduino/README.md
+            - stm32cube/README.md
+          message: "update README files with user info"
