@@ -28,6 +28,7 @@ def setup_gpio():
     time.sleep(0.5)  # Wait for system to initialize
     
     yield
-    
+    # Set GPIO22 as input (high impedance) before cleanup
+    GPIO.setup(22, GPIO.IN)
     # Clean up GPIO settings after tests
     GPIO.cleanup()
