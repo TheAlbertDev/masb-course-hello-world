@@ -521,7 +521,7 @@ Implement the challenge in a branch called `{{ challenge_branch_name }}` and nam
 
 Don't forget to perform the necessary `git add`, `git commit` and `git push` to save the version of the code with the challenge completed!
 
-Once again, create a Pull Request from the `{{ challenge-branch-name }}` branch to `main` and wait for the test results. Correct any undesired behavior detected by the tests, and, once all tests have passed, proceed to merge the Pull Request and enjoy a deserved rest. You have finished the first lab session! 💪
+Once again, create a Pull Request from the `{{ challenge_branch_name }}` branch to `main` and wait for the test results. Correct any undesired behavior detected by the tests, and, once all tests have passed, proceed to merge the Pull Request and enjoy a deserved rest. You have finished the first lab session! 💪
 
 ## Evaluation
 
