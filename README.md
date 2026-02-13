@@ -13,7 +13,14 @@ Please refer to the respective README files for detailed guidance on each platfo
 
 ## ⚙️ GitHub Actions and Documentation Generation
 
-This repository uses GitHub Actions to automatically generate and update documentation files. After pushing changes or creating a pull request, please allow some time for the GitHub Actions workflow to complete. You may need to refresh the page after a few minutes to see the updated documentation.
+This repository uses GitHub Actions to automatically generate and update documentation files. This GitHub Action must be triggered manually only once. To do so, follow these steps:
+
+1. Click the **Actions** tab.
+2. Select the workflow named **🚀 Init course**.
+3. Click the **Run workflow** button (top right).
+4. Make sure the branch is set to `main` and confirm by clicking **Run workflow**.
+
+After a short wait, the workflow will complete and documentation files will be generated. Refresh the page to see the updated status badge.
 
 **GitHub Actions Status:** [![🚀 Init course](https://github.com/{{ github_repo_fullname }}/actions/workflows/init_course.yaml/badge.svg)](https://github.com/{{ github_repo_fullname }}/actions/workflows/init_course.yaml)
 
