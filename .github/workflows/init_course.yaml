@@ -57,7 +57,16 @@ jobs:
               if (username.startsWith('-')) {
                 username = username.substring(1);
               }
-            } 
+            } else if (repo.fork && repo.parent) {
+              core.setOutput('GITHUB_REPO_FORK_NAME', repo.parent.name);
+              core.setOutput('GITHUB_REPO_FORK_URL', repo.parent.html_url);
+              const originalRepoName = repo.parent.name;
+              const currentRepoName = context.repo.repo;
+              username = currentRepoName.replace(originalRepoName, '');
+              if (username.startsWith('-')) {
+                username = username.substring(1);
+              }
+            }
 
             const { data: userData } = await github.rest.users.getByUsername({ username });
             const ownerFullName = userData.name || 'Not available';
@@ -118,7 +127,7 @@ jobs:
         with:
           template-file: README.md
           template-vars: |
-            github_repo_template: ${{ steps.get-context.outputs.GITHUB_REPO_TEMPLATE_URL }}
+            github_repo_template: ${{ steps.get-context.outputs.GITHUB_REPO_TEMPLATE_URL || steps.get-context.outputs.GITHUB_REPO_FORK_URL }}
             github_repo_fullname: ${{ steps.get-context.outputs.GITHUB_REPO_FULLNAME }}
 
       - name: 📝 Overwrite Main README
