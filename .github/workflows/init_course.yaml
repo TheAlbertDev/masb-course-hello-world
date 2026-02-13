@@ -83,8 +83,8 @@ jobs:
             digital_outputs_project_name: digital-outputs
             digital_inputs_branch_name: arduino-digital-inputs-branch
             digital_inputs_project_name: digital-inputs
-            challenge-branch-name: arduino-challenge-branch
-            challenge-project-name: challenge
+            challenge_branch_name: arduino-challenge-branch
+            challenge_project_name: challenge
             platformio_folder_name: arduino/workspace
             github_repo_url: ${{ steps.get-context.outputs.GITHUB_REPO_URL }}
 

@@ -400,7 +400,7 @@ Now our main branch matches the remote repository. Next, as in the previous issu
 git switch -c {{ digital_inputs_branch_name }}
 ```
 
-Once we're in the correct branch, let's create a project in the `{{ platformio_folder_name }}` folder called `{{ digital-inputs }}`. You already know how to do this from the previous section.
+Once we're in the correct branch, let's create a project named `{{ digital_inputs_project_name }}` in the folder `{{ platformio_folder_name }}`. You already know how to do this from the previous section.
 
 #### Read the button to change the state of the LED
 
@@ -500,7 +500,7 @@ We try again and... bingo! The program works exactly as we wanted. From the prev
 We have a program working correctly. Let's save this version and push it to the remote repository:
 
 ```bash
-git add platformio-projects/digital-inputs
+git add {{ platformio_folder_name }}/{{ digital_inputs_project_name }}
 git commit -m "the LED turns off and on using the B1 button"
 git push
 ```
@@ -515,7 +515,7 @@ Now let's take it a step further with a challenge for you to complete on your ow
 
 You've seen how to turn on and off an LED, how to make it blink, how to use digital inputs with edge-triggered... you're almost there!
 
-Implement the challenge in a branch called `{{ challenge-branch-name }}` and name the project `{{ challenge-project-name }}`.
+Implement the challenge in a branch called `{{ challenge_branch_name }}` and name the project `{{ challenge_project_name }}`.
 
 ### Pull Request
 
