@@ -132,12 +132,6 @@ jobs:
           README_TEXT: ${{ steps.update-main-readme.outputs.updated-text }}
         run: echo "$README_TEXT" > README.md
 
-      - name: 🚫 Disable current workflow
-        run: |
-          gh workflow disable "🚀 Init course"
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-
       - name: 💾 Commit changes
         uses: EndBug/add-and-commit@v9
         with:
