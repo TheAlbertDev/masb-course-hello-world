@@ -1,4 +1,4 @@
-name: 🧪 Arduino digital outputs - PR check
+name: 🧪 STM32Cube digital inputs - PR check
 
 on:
   pull_request:
@@ -18,7 +18,7 @@ jobs:
     name: ✅ Build and Run Acceptance tests
     if: |
       !github.event.repository.is_template &&
-      github.head_ref == 'arduino-digital-outputs-branch'
+      github.head_ref == 'stm32cube-digital-inputs-branch'
     runs-on: self-hosted
     steps:
       - name: 🛡️ Get GitHub App token
@@ -34,14 +34,17 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
 
-      - name: 🏗️ Build and upload PlatformIO CLI project
+      - name: 🏗️ Build and upload STM32Cube project
         run: |
-          cd ${{ github.workspace }}/arduino/workspace/digital-outputs
-          pio run --target upload
+          cd ${{ github.workspace }}/stm32cube/workspace/digital-inputs
+          rm -rf build/Debug
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=./cmake/gcc-arm-none-eabi.cmake -B build/Debug
+          cmake --build build/Debug
+          pio pkg exec -p tool-openocd -c "openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c 'program build/Debug/digital-inputs.elf verify reset exit'"
 
       - name: 🧬 Run acceptance tests
         run: |
-          cd ${{ github.workspace }}/.github/tests/acceptance/test_digital_outputs
+          cd ${{ github.workspace }}/.github/tests/acceptance/test_digital_inputs
           /usr/bin/python3 -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt

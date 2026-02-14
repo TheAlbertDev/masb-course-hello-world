@@ -41,7 +41,7 @@ jobs:
 
       - name: 🧬 Run acceptance tests
         run: |
-          cd ${{ github.workspace }}/.github/tests/arduino/test_challenge/acceptance
+          cd ${{ github.workspace }}/.github/tests/acceptance/test_challenge
           /usr/bin/python3 -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
